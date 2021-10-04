@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace Testing.Bank.Tests.Theories.Factories
+namespace Testing.Bank.Tests.Theories.Data
 {
     public class UserClassData : IEnumerable<object[]>
     {

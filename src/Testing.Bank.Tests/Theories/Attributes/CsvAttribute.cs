@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -10,14 +11,23 @@ namespace Testing.Bank.Tests.Theories.Attributes
 {
     public class CsvAttribute : DataAttribute
     {
-        public CsvAttribute()
+        private readonly string _file;
+
+        public CsvAttribute(string file)
         {
-            
+            _file = file;
         }
 
         public override IEnumerable<object[]> GetData(MethodInfo testMethod)
         {
-            throw new NotImplementedException();
+            using var file = new StreamReader(_file);
+
+            var line = string.Empty;
+
+            while ((line = file.ReadLine()) != null)
+            {
+                var items = line.Split(",");
+            }
         }
     }
 }

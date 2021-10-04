@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Testing.Bank.Tests.Theories.Factories
+namespace Testing.Bank.Tests.Theories.Data
 {
     public class UserTheoryData : TheoryData<string, int, string>
     {

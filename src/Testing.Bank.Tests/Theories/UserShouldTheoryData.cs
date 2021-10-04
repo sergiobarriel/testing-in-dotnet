@@ -1,5 +1,5 @@
 ﻿using System;
-using Testing.Bank.Tests.Theories.Factories;
+using Testing.Bank.Tests.Theories.Data;
 using Xunit;
 
 namespace Testing.Bank.Tests.Theories
