@@ -28,6 +28,8 @@ namespace Testing.Bank.Tests.Theories.Attributes
             {
                 var items = line.Split(",");
             }
+
+            return new List<object[]>();
         }
     }
 }
