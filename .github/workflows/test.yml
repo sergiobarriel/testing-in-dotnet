@@ -28,5 +28,8 @@ jobs:
     - name: Build
       run: dotnet build ./src/Testing.Bank.Tests --no-restore
       
+    - name: List tests
+      run: dotnet test ./src/Testing.Bank.Tests --no-build --list-tests
+      
     - name: Test
       run: dotnet test ./src/Testing.Bank.Tests --no-build --verbosity minimal
