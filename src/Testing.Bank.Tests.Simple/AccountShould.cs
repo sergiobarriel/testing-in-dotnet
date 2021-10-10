@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace Testing.Bank.Tests
+namespace Testing.Bank.Tests.Simple
 {
     public class AccountShould
     {
