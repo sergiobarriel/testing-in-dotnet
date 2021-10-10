@@ -20,6 +20,9 @@ namespace Testing.Bank.Tests.Theories.Attributes
 
         public override IEnumerable<object[]> GetData(MethodInfo testMethod)
         {
+            var parameters = testMethod.GetParameters();
+            var parameterTypes = parameters.Select(parameterInfo => parameterInfo.ParameterType).ToArray();
+
             using var file = new StreamReader(_file);
 
             var line = string.Empty;
@@ -27,9 +30,18 @@ namespace Testing.Bank.Tests.Theories.Attributes
             while ((line = file.ReadLine()) != null)
             {
                 var items = line.Split(",");
-            }
 
-            return new List<object[]>();
+                var result = new object[parameterTypes.Length];
+
+                for (var i = 0; i < parameterTypes.Length; i++)
+                {
+                    result[i] = parameterTypes[i] == typeof(int) 
+                        ? Convert.ToInt32(items[i]) 
+                        : (object) items[i];
+                }
+
+                yield return result;
+            }
         }
     }
 }

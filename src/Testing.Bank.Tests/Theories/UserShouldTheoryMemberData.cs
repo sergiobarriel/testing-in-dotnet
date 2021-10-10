@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Testing.Bank.Tests.Theories.Attributes;
 using Xunit;
 
 namespace Testing.Bank.Tests.Theories
@@ -26,4 +27,6 @@ namespace Testing.Bank.Tests.Theories
 
 
     }
+
+
 }
