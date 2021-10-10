@@ -22,11 +22,50 @@ jobs:
       with:
         dotnet-version: 5.0.x
         
-    - name: Restore dependencies
-      run: dotnet restore ./src/Testing.Bank.Tests
+    - name: Restore tests dependencies (simple)
+      run: dotnet restore ./src/Testing.Bank.Tests.Simple
       
-    - name: Build
-      run: dotnet build ./src/Testing.Bank.Tests --no-restore
+    - name: Build tests (simple)
+      run: dotnet build ./src/Testing.Bank.Tests.Simple --no-restore
       
-    - name: Test
-      run: dotnet test ./src/Testing.Bank.Tests --no-build --verbosity normal
+    - name: Run tests (simple)
+      run: dotnet test ./src/Testing.Bank.Tests.Simple --no-build --verbosity normal      
+      
+    - name: Restore tests dependencies (member data)
+      run: dotnet restore ./src/Testing.Bank.Tests.MemberData
+      
+    - name: Build tests (member data)
+      run: dotnet build ./src/Testing.Bank.Tests.MemberData --no-restore
+      
+    - name: Run tests (member data)
+      run: dotnet test ./src/Testing.Bank.Tests.MemberData --no-build --verbosity normal   
+      
+      
+    - name: Restore tests dependencies (inline data)
+      run: dotnet restore ./src/Testing.Bank.Tests.Inline Data
+      
+    - name: Build tests (inline data)
+      run: dotnet build ./src/Testing.Bank.Tests.InlineData --no-restore
+      
+    - name: Run tests (inline data)
+      run: dotnet test ./src/Testing.Bank.Tests.InlineData --no-build --verbosity normal         
+      
+      
+    - name: Restore tests dependencies (class data)
+      run: dotnet restore ./src/Testing.Bank.Tests.ClassData
+      
+    - name: Build tests (class data)
+      run: dotnet build ./src/Testing.Bank.Tests.ClassData --no-restore
+      
+    - name: Run tests (class data)
+      run: dotnet test ./src/Testing.Bank.Tests.ClassData --no-build --verbosity normal         
+      
+      
+    - name: Restore tests dependencies (custom data)
+      run: dotnet restore ./src/Testing.Bank.Tests.CustomData
+      
+    - name: Build tests (custom data)
+      run: dotnet build ./src/Testing.Bank.Tests.CustomData --no-restore      
+      
+    - name: Run tests (custom data)
+      run: dotnet test ./src/Testing.Bank.Tests.CustomData --no-build --verbosity normal         
