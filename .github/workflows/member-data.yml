@@ -1,4 +1,4 @@
-name: .NET
+name: member data
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: .NET
+name: inline data
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: .NET
+name: class data
 
 on:
   push:
