@@ -7,16 +7,14 @@ namespace Testing.Bank.Tests.Assertions
     public class AssertionShould
     {
         /*
-         * 
-
-Empty
-NotEmpty
-True
-False
-
-Null
-NotNull
-Throws<T>
+         * Pending: 
+         * Empty
+         * NotEmpty
+         * True
+         * False
+         * Null
+         * NotNull
+         * Throws<T>
          */
 
         [Fact]
