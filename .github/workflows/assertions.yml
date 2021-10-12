@@ -1,0 +1,32 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+    
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  assertions:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore tests dependencies (assertions)
+      run: dotnet restore ./src/Testing.Bank.Tests.Assertions
+      
+    - name: Build tests (assertions)
+      run: dotnet build ./src/Testing.Bank.Tests.Assertions --no-restore
+      
+    - name: Run tests (assertions)
+      run: dotnet test ./src/Testing.Bank.Tests.Assertions --no-build --verbosity normal            

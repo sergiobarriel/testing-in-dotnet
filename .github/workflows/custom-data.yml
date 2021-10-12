@@ -1,0 +1,33 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+    
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  custom-data:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+ 
+      
+    - name: Restore tests dependencies (custom data)
+      run: dotnet restore ./src/Testing.Bank.Tests.CustomData
+      
+    - name: Build tests (custom data)
+      run: dotnet build ./src/Testing.Bank.Tests.CustomData --no-restore      
+      
+    - name: Run tests (custom data)
+      run: dotnet test ./src/Testing.Bank.Tests.CustomData --no-build --verbosity normal         

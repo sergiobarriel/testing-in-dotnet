@@ -1,0 +1,32 @@
+name: .NET
+
+on:
+  push:
+    branches: [ main ]
+    
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  simple:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore tests dependencies (simple)
+      run: dotnet restore ./src/Testing.Bank.Tests.Simple
+      
+    - name: Build tests (simple)
+      run: dotnet build ./src/Testing.Bank.Tests.Simple --no-restore
+      
+    - name: Run tests (simple)
+      run: dotnet test ./src/Testing.Bank.Tests.Simple --no-build --verbosity normal            
