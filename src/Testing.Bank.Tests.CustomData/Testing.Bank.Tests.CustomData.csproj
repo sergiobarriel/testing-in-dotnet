@@ -21,4 +21,13 @@
     <ProjectReference Include="..\Testing.Bank\Testing.Bank.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\TransactionData.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\UserData.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

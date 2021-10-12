@@ -6,7 +6,7 @@ namespace Testing.Bank.Tests.Simple
     public class TransactionShould
     {
         [Fact]
-        public void UserWithoutName_ThrowsException()
+        public void TransactionWithoutDescription_ThrowsException()
         {
             // Arrange
             var type = TransactionType.Deposit;

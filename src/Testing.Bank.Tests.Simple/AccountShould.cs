@@ -50,37 +50,6 @@ namespace Testing.Bank.Tests.Simple
             Assert.Equal(balance, account.Balance);
         }
 
-        [Fact]
-        public void LessThanZeroDeposit_ThrowsException()
-        {
-            // Arrange
-            var account = new Account(GetUser(), 100);
-
-            // Act
-            Action action = () =>
-            {
-                account.Deposit(-10);
-            };
-
-            // Assert
-            Assert.Throws<Exception>(action);
-        }
-
-        [Fact]
-        public void LessThanZeroWithdraw_ThrowsException()
-        {
-            // Arrange
-            var account = new Account(GetUser(), 100);
-
-            // Act
-            Action action = () =>
-            {
-                account.Withdraw(-10);
-            };
-
-            // Assert
-            Assert.Throws<Exception>(action);
-        }
 
         [Fact]
         public void Deposit_IncreaseBalance()
@@ -111,6 +80,40 @@ namespace Testing.Bank.Tests.Simple
         }
 
         [Fact]
+        public void LessThanZeroDeposit_ThrowsException()
+        {
+            // Arrange
+            var account = new Account(GetUser(), 100);
+
+            // Act
+            Action action = () =>
+            {
+                account.Deposit(-10);
+            };
+
+            // Assert
+            var exception = Assert.Throws<Exception>(action);
+            Assert.Equal($"{nameof(Transaction.Amount)} should be greater than zero", exception.Message);
+        }
+
+        [Fact]
+        public void LessThanZeroWithdraw_ThrowsException()
+        {
+            // Arrange
+            var account = new Account(GetUser(), 100);
+
+            // Act
+            Action action = () =>
+            {
+                account.Withdraw(-10);
+            };
+
+            // Assert
+            var exception = Assert.Throws<Exception>(action);
+            Assert.Equal($"{nameof(Transaction.Amount)} should be greater than zero", exception.Message);
+        }
+
+        [Fact]
         public void WithdrawGreaterThanBalance_ThrowsException()
         {
             // Arrange
@@ -123,8 +126,8 @@ namespace Testing.Bank.Tests.Simple
             };
 
             // Assert
-            Assert.Throws<Exception>(action);
-
+            var exception = Assert.Throws<Exception>(action);
+            Assert.Equal($"{nameof(Transaction.Amount)} should be less than balance", exception.Message);
         }
     }
 }

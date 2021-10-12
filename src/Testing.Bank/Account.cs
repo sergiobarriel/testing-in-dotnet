@@ -4,7 +4,12 @@ namespace Testing.Bank
 {
     public class Account
     {
-        public User User { get; }
+        private User _user { get; set; }
+        public User User
+        {
+            get => _user;
+            set => _user = value ?? throw new Exception($"{nameof(User)} shouldn't be default");
+        }
 
         private int _balance { get; set; }
         public int Balance
@@ -23,14 +28,14 @@ namespace Testing.Bank
 
         public void Deposit(int amount)
         {
-            if (amount <= 0) throw new Exception($"{nameof(amount)} should be greater than zero");
+            if (amount <= 0) throw new Exception($"{nameof(Transaction.Amount)} should be greater than zero");
 
             Balance += amount;
         }
         public void Withdraw(int amount)
         {
-            if (amount <= 0) throw new Exception($"{nameof(amount)} should be greater than zero");
-            if (Balance - amount < 0) throw new Exception($"{nameof(amount)} should be less than balance");
+            if (amount <= 0) throw new Exception($"{nameof(Transaction.Amount)} should be greater than zero");
+            if (Balance - amount < 0) throw new Exception($"{nameof(Transaction.Amount)} should be less than balance");
 
             Balance -= amount;
         }

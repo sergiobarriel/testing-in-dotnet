@@ -14,7 +14,6 @@ namespace Testing.Bank
         }
 
         private int _age { get; set; }
-
         public int Age
         {
             get => _age;
