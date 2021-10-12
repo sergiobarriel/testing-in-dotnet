@@ -42,7 +42,7 @@ jobs:
       
       
     - name: Restore tests dependencies (inline data)
-      run: dotnet restore ./src/Testing.Bank.Tests.Inline Data
+      run: dotnet restore ./src/Testing.Bank.Tests.InlineData
       
     - name: Build tests (inline data)
       run: dotnet build ./src/Testing.Bank.Tests.InlineData --no-restore
