@@ -6,17 +6,6 @@ namespace Testing.Bank.Tests.Assertions
 {
     public class AssertionShould
     {
-        /*
-         * Pending: 
-         * Empty
-         * NotEmpty
-         * True
-         * False
-         * Null
-         * NotNull
-         * Throws<T>
-         */
-
         [Fact]
         public void Equal()
         {
@@ -136,6 +125,102 @@ namespace Testing.Bank.Tests.Assertions
 
             // Assert
             Assert.IsType(typeof(SingletonFactory), singleton);
+        }
+
+        [Fact]
+        public void IsNotType()
+        {
+            // Arrange
+            var singleton = SingletonFactory.GetInstance();
+
+            // Act
+
+            // Assert
+            Assert.IsNotType(typeof(ISingletonFactoryTwo), singleton);
+        }
+
+        [Fact]
+        public void True()
+        {
+            // Arrange
+            var condition = 1 == 1;
+
+            // Act
+
+            // Assert
+            Assert.True(condition);
+        }
+
+        [Fact]
+        public void False()
+        {
+            // Arrange
+            var condition = 1 == 2;
+
+            // Act
+
+            // Assert
+            Assert.False(condition);
+        }
+
+        [Fact]
+        public void Empty()
+        {
+            // Arrange
+            var text = string.Empty;
+
+            // Act
+
+            // Assert
+            Assert.Empty(text);
+        }
+
+        [Fact]
+        public void NotEmpty()
+        {
+            // Arrange
+            var text = "Hello Morty!";
+
+            // Act
+
+            // Assert
+            Assert.NotEmpty(text);
+        }
+
+        [Fact]
+        public void Null()
+        {
+            // Arrange
+            string text = null;
+
+            // Act
+
+            // Assert
+            Assert.Null(text);
+        }
+
+        [Fact]
+        public void NotNull()
+        {
+            // Arrange
+            var text = "Hello Morty!";
+
+            // Act
+
+            // Assert
+            Assert.NotNull(text);
+        }
+
+        [Fact]
+        public void Throws()
+        {
+            // Arrange
+
+            // Act
+            Action action = () => throw new Exception();
+
+            // Assert
+            Assert.Throws<Exception>(action);
         }
     }
 }
