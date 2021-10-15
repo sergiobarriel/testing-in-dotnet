@@ -1,9 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Testing.Bank
 {
     public class Account
     {
+        private IList<Transaction> _transactions { get; set; }
+        public IList<Transaction> Transactions
+        {
+            get => _transactions;
+            set => _transactions = value ?? throw new Exception($"{nameof(Transactions)} shouldn't be null");
+        }
+
         private User _user { get; set; }
         public User User
         {
@@ -15,29 +24,44 @@ namespace Testing.Bank
         public int Balance
         {
             get => _balance;
-            set => _balance = value > 0
-                ? value
-                : throw new Exception($"{nameof(Balance)} should be greater than zero");
+            set => _balance = value;
         }
 
-        public Account(User user, int balance)
+
+        public Account(User user, IList<Transaction> transactions)
         {
             User = user;
-            Balance = balance;
+            Transactions = transactions;
+            Balance = GetBalance();
         }
 
-        public void Deposit(int amount)
+        public int GetBalance()
+        {
+            var deposits = Transactions.Where(transaction => transaction.Type == TransactionType.Deposit)
+                .Sum(transaction => transaction.Amount);
+
+            var withdraws = Transactions.Where(transaction => transaction.Type == TransactionType.Withdraw)
+                .Sum(transaction => transaction.Amount);
+
+            return deposits - withdraws;
+        }
+
+        public void Deposit(int amount, string description)
         {
             if (amount <= 0) throw new Exception($"{nameof(Transaction.Amount)} should be greater than zero");
 
-            Balance += amount;
+            Transactions.Add(new Transaction(TransactionType.Deposit, amount, description));
+
+            Balance = GetBalance();
         }
-        public void Withdraw(int amount)
+        public void Withdraw(int amount, string description)
         {
             if (amount <= 0) throw new Exception($"{nameof(Transaction.Amount)} should be greater than zero");
             if (Balance - amount < 0) throw new Exception($"{nameof(Transaction.Amount)} should be less than balance");
 
-            Balance -= amount;
+            Transactions.Add(new Transaction(TransactionType.Withdraw, amount, description));
+
+            Balance = GetBalance();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Testing.Bank.Tests.ClassData.Data;
 using Xunit;
 
@@ -8,39 +9,37 @@ namespace Testing.Bank.Tests.ClassData
     {
         private User GetUser() => new User("Rick Sánchez", 70);
 
-        [Theory]
-        [ClassData(typeof(AccountData))]
-        public void AccountCreation_ThrowsExceptions(int balance)
+        private IList<Transaction> Transactions => new List<Transaction>()
         {
-            Action action = () => { _ = new Account(GetUser(), balance); };
-
-            Assert.Throws<Exception>(action);
-        }
-
+            new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            new Transaction(TransactionType.Withdraw, 10, "Withdraw 10 €"),
+        };
 
         [Theory]
-        [ClassData(typeof(AccountWithdrawData))]
-        public void AccountWithdraw_ThrowsExceptions(int balance, int amount)
+        [ClassData(typeof(WithdrawData))]
+        public void AccountWithdraw_ThrowsExceptions(int amount)
         {
             Action action = () =>
             {
-                var account = new Account(GetUser(), balance);
+                var account = new Account(GetUser(), Transactions);
 
-                account.Withdraw(amount);
+                account.Withdraw(amount, $"Withdraw {amount} $");
             };
 
             Assert.Throws<Exception>(action);
         }
 
         [Theory]
-        [ClassData(typeof(AccountDepositData))]
-        public void AccountDeposit_ThrowsExceptions(int balance, int amount)
+        [ClassData(typeof(DepositData))]
+        public void AccountDeposit_ThrowsExceptions(int amount)
         {
             Action action = () =>
             {
-                var account = new Account(GetUser(), balance);
+                var account = new Account(GetUser(), Transactions);
 
-                account.Deposit(amount);
+                account.Deposit(amount, $"Deposit {amount} $");
             };
 
             Assert.Throws<Exception>(action);

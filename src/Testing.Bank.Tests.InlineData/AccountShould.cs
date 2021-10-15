@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Testing.Bank.Tests.InlineData
@@ -7,43 +8,40 @@ namespace Testing.Bank.Tests.InlineData
     {
         private User GetUser() => new User("Rick Sánchez", 70);
 
-        [Theory]
-        [InlineData(-100)]
-        [InlineData(0)]
-        [InlineData(null)]
-        public void AccountCreation_ThrowsException(int balance)
+        private IList<Transaction> Transactions => new List<Transaction>()
         {
-            Action action = () => { _ = new Account(GetUser(), balance); };
-
-            Assert.Throws<Exception>(action);
-        }
+            new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            new Transaction(TransactionType.Withdraw, 10, "Withdraw 10 €"),
+        };
 
         [Theory]
-        [InlineData(100, 200)]
-        [InlineData(0, 0)]
-        [InlineData(100, -100)]
-        public void AccountWithdraw_ThrowsExceptions(int balance, int amount)
+        [InlineData(0)]
+        [InlineData(-100)]
+        [InlineData(1000000)]
+        public void AccountWithdraw_ThrowsExceptions(int amount)
         {
             Action action = () =>
             {
-                var account = new Account(GetUser(), balance);
+                var account = new Account(GetUser(), Transactions);
 
-                account.Withdraw(amount);
+                account.Withdraw(amount, $"Withdraw {amount} $");
             };
 
             Assert.Throws<Exception>(action);
         }
 
         [Theory]
-        [InlineData(0, 0)]
-        [InlineData(100, -100)]
-        public void AccountDeposit_ThrowsExceptions(int balance, int amount)
+        [InlineData(0)]
+        [InlineData(-100)]
+        public void AccountDeposit_ThrowsExceptions(int amount)
         {
             Action action = () =>
             {
-                var account = new Account(GetUser(), balance);
+                var account = new Account(GetUser(), Transactions);
 
-                account.Deposit(amount);
+                account.Deposit(amount, $"Deposit {amount} $");
             };
 
             Assert.Throws<Exception>(action);

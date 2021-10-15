@@ -8,45 +8,37 @@ namespace Testing.Bank.Tests.MemberData
     {
         private static User GetUser() => new User("Rick Sánchez", 70);
 
-        public static IEnumerable<object[]> GetAccountTheoryData() => new List<object[]>()
+        private IList<Transaction> Transactions => new List<Transaction>()
         {
-            new object[] { GetUser(), -100 },
-            new object[] { GetUser(), 0 },
-            new object[] { null, 100 },
+            new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            new Transaction(TransactionType.Withdraw, 10, "Withdraw 10 €"),
         };
 
         public static IEnumerable<object[]> GetWithdrawTheoryData() => new List<object[]>()
         {
-            new object[] { GetUser(), 100, 200 },
-            new object[] { GetUser(), 0, 0 },
-            new object[] { GetUser(), 100, -100 },
+            new object[] { GetUser(), 100000 },
+            new object[] { GetUser(), 0 },
+            new object[] { GetUser(), -100 },
         };
 
         public static IEnumerable<object[]> GetDepositTheoryData() => new List<object[]>()
         {
-            new object[] { GetUser(), 0, 0 },
-            new object[] { GetUser(), 100, -100 },
+            new object[] { GetUser(), 0 },
+            new object[] { GetUser(), -100 },
         };
 
 
         [Theory]
-        [MemberData(nameof(GetAccountTheoryData))]
-        public void AccountCreation_ThrowsExceptions(User user, int balance)
-        {
-            Action action = () => { _ = new Account(user, balance); };
-
-            Assert.Throws<Exception>(action);
-        }
-
-        [Theory]
         [MemberData(nameof(GetWithdrawTheoryData))]
-        public void AccountWithdraw_ThrowsExceptions(User user, int balance, int amount)
+        public void AccountWithdraw_ThrowsExceptions(User user, int amount)
         {
             Action action = () =>
             {
-                var account = new Account(user, balance);
+                var account = new Account(user, Transactions);
 
-                account.Withdraw(amount);
+                account.Withdraw(amount, $"Withdraw {amount} $");
             };
 
             Assert.Throws<Exception>(action);
@@ -54,13 +46,13 @@ namespace Testing.Bank.Tests.MemberData
 
         [Theory]
         [MemberData(nameof(GetDepositTheoryData))]
-        public void AccountDeposit_ThrowsExceptions(User user, int balance, int amount)
+        public void AccountDeposit_ThrowsExceptions(User user, int amount)
         {
             Action action = () =>
             {
-                var account = new Account(user, balance);
+                var account = new Account(user, Transactions);
 
-                account.Deposit(amount);
+                account.Deposit(amount, $"Deposit {amount} $");
             };
 
             Assert.Throws<Exception>(action);

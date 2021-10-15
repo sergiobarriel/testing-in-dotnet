@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Testing.Bank.Tests.Simple
@@ -8,126 +10,155 @@ namespace Testing.Bank.Tests.Simple
         private User GetUser() => new User("Rick Sánchez", 70);
 
         [Fact]
-        public void AccountWithLessThanZeroBalance_ThrowsException()
+        public void AccountWithEmptyTransactions_GenerateInstance()
         {
             // Arrange
-            var balance = -5;
+            var transactions = new List<Transaction>();
 
             // Act
-            Action action = () => { _ = new Account(GetUser(), balance); };
+            var account = new Account(GetUser(), transactions);
+            var balance = account.GetBalance();
+
+            // Assert
+            Assert.Equal(0, balance);
+        }
+
+        [Fact]
+        public void AccountWithNullTransactions_GenerateInstance()
+        {
+            // Arrange
+
+            // Act
+            Action action = () => { _ = new Account(GetUser(), null); };
 
             // Assert
             var exception = Assert.Throws<Exception>(action);
-            Assert.Equal($"{nameof(Account.Balance)} should be greater than zero", exception.Message);
-
         }
 
         [Fact]
-        public void AccountWithZeroBalance_ThrowsException()
+        public void AccountWithDepositTransactions_CalculatesBalance()
         {
             // Arrange
-            var balance = 0;
-
-            // Act
-            Action action = () => { _ = new Account(GetUser(), balance); };
-
-            // Assert
-            var exception = Assert.Throws<Exception>(action);
-            Assert.Equal($"{nameof(Account.Balance)} should be greater than zero", exception.Message);
-
-        }
-
-        [Fact]
-        public void AccountWithRightParameters_GenerateInstance()
-        {
-            // Arrange
-            var balance = 10;
-
-            // Act
-            var account = new Account(GetUser(), balance);
-
-            // Assert
-            Assert.Equal(balance, account.Balance);
-        }
-
-
-        [Fact]
-        public void Deposit_IncreaseBalance()
-        {
-            // Arrange
-            var account = new Account(GetUser(), 100);
-
-            // Act
-            account.Deposit(10);
-
-            // Assert
-            Assert.Equal(110, account.Balance);
-            Assert.True(account.Balance > 100);
-        }
-
-        [Fact]
-        public void Withdraw_ReduceBalance()
-        {
-            // Arrange
-            var account = new Account(GetUser(), 100);
-
-            // Act
-            account.Withdraw(10);
-
-            // Assert
-            Assert.Equal(90, account.Balance);
-            Assert.True(account.Balance < 100);
-        }
-
-        [Fact]
-        public void LessThanZeroDeposit_ThrowsException()
-        {
-            // Arrange
-            var account = new Account(GetUser(), 100);
-
-            // Act
-            Action action = () =>
+            var transactions = new List<Transaction>()
             {
-                account.Deposit(-10);
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
             };
 
+            // Act
+            var account = new Account(GetUser(), transactions);
+            var balance = account.GetBalance();
+
             // Assert
-            var exception = Assert.Throws<Exception>(action);
-            Assert.Equal($"{nameof(Transaction.Amount)} should be greater than zero", exception.Message);
+            Assert.Equal(30, balance);
         }
 
         [Fact]
-        public void LessThanZeroWithdraw_ThrowsException()
+        public void AccountWithWithdrawTransactions_CalculatesBalance()
         {
             // Arrange
-            var account = new Account(GetUser(), 100);
-
-            // Act
-            Action action = () =>
+            var transactions = new List<Transaction>()
             {
-                account.Withdraw(-10);
+                new Transaction(TransactionType.Withdraw, 10, "Withdraw 10 €"),
+                new Transaction(TransactionType.Withdraw, 10, "Withdraw 10 €"),
+                new Transaction(TransactionType.Withdraw, 10, "Withdraw 10 €"),
             };
 
+            // Act
+            var account = new Account(GetUser(), transactions);
+            var balance = account.GetBalance();
+
             // Assert
-            var exception = Assert.Throws<Exception>(action);
-            Assert.Equal($"{nameof(Transaction.Amount)} should be greater than zero", exception.Message);
+            Assert.Equal(-30, balance);
+        }
+
+
+        [Fact]
+        public void AccountWithDepositAndWithdrawTransactions_CalculatesBalance()
+        {
+            // Arrange
+            var transactions = new List<Transaction>()
+            {
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Withdraw, 10, "Withdraw 10 €"),
+                new Transaction(TransactionType.Withdraw, 10, "Withdraw 10 €"),
+                new Transaction(TransactionType.Withdraw, 10, "Withdraw 10 €"),
+            };
+
+            // Act
+            var account = new Account(GetUser(), transactions);
+            var balance = account.GetBalance();
+
+            // Assert
+            Assert.Equal(0, balance);
         }
 
         [Fact]
-        public void WithdrawGreaterThanBalance_ThrowsException()
+        public void AccountWithdraw_ReducesBalance()
         {
             // Arrange
-            var account = new Account(GetUser(), 100);
-
-            // Act
-            Action action = () =>
+            var transactions = new List<Transaction>()
             {
-                account.Withdraw(200);
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
             };
 
+            // Act
+            var account = new Account(GetUser(), transactions);
+            
+            account.Withdraw(10, "Withdraw 10 €");
+
+            var balance = account.GetBalance();
+
             // Assert
-            var exception = Assert.Throws<Exception>(action);
-            Assert.Equal($"{nameof(Transaction.Amount)} should be less than balance", exception.Message);
+            Assert.Equal(20, balance);
+        }
+
+
+        [Fact]
+        public void AccountDeposit_IncreasesBalance()
+        {
+            // Arrange
+            var transactions = new List<Transaction>()
+            {
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Deposit, 10, "Deposit 10 €"),
+            };
+
+            // Act
+            var account = new Account(GetUser(), transactions);
+
+            account.Deposit(10, "Deposit 10 €");
+
+            var balance = account.GetBalance();
+
+            // Assert
+            Assert.Equal(40, balance);
+        }
+
+        [Fact]
+        public void AccountInZero_CantWithdraw()
+        {
+            // Arrange
+            var transactions = new List<Transaction>()
+            {
+                new Transaction(TransactionType.Withdraw, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Withdraw, 10, "Deposit 10 €"),
+                new Transaction(TransactionType.Withdraw, 10, "Deposit 10 €"),
+            };
+
+            // Act
+            var account = new Account(GetUser(), transactions);
+
+            Action action = () => { account.Withdraw(10, "Withdraw 10 €"); };
+
+            // Assert
+            Assert.Throws<Exception>(action);
         }
     }
 }
