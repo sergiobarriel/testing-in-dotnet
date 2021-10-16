@@ -1,0 +1,32 @@
+name: fixture
+
+on:
+  push:
+    branches: [ main ]
+    
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  simple:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    
+    - uses: actions/checkout@v2
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+        
+    - name: Restore tests dependencies (fixture)
+      run: dotnet restore ./src/Testing.Bank.Tests.Fixtures
+      
+    - name: Build tests (fixture)
+      run: dotnet build ./src/Testing.Bank.Tests.Fixtures --no-restore
+      
+    - name: Run tests (fixture)
+      run: dotnet test ./src/Testing.Bank.Tests.Fixtures --no-build --verbosity normal            
