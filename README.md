@@ -13,3 +13,5 @@ View all [Github Actions](https://github.com/sergiobarriel/testing-in-dotnet/act
 [![class data](https://github.com/sergiobarriel/testing-in-dotnet/actions/workflows/class-data.yml/badge.svg)](https://github.com/sergiobarriel/testing-in-dotnet/actions/workflows/class-data.yml)
 
 [![class data](https://github.com/sergiobarriel/testing-in-dotnet/actions/workflows/class-data.yml/badge.svg)](https://github.com/sergiobarriel/testing-in-dotnet/actions/workflows/class-data.yml)
+
+[![class data](https://github.com/sergiobarriel/testing-in-dotnet/actions/workflows/fixture.yml/badge.svg)](https://github.com/sergiobarriel/testing-in-dotnet/actions/workflows/fixture.yml)
