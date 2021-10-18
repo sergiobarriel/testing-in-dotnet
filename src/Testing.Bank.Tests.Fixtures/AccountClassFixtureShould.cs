@@ -7,13 +7,13 @@ using Xunit;
 
 namespace Testing.Bank.Tests.Fixtures
 {
-    public class AccountShould : IClassFixture<AccountFixture>
+    public class AccountClassFixtureShould : IClassFixture<AccountFixture>
     {
-        private readonly AccountFixture _accountFixture;
+        private readonly AccountFixture _fixture;
 
-        public AccountShould(AccountFixture accountFixture)
+        public AccountClassFixtureShould(AccountFixture fixture)
         {
-            _accountFixture = accountFixture;
+            _fixture = fixture;
         }
 
 
@@ -21,41 +21,41 @@ namespace Testing.Bank.Tests.Fixtures
         public void AccountDeposit_ReturnsRightBalance()
         {
             // Arrange
-            var startingBalance = _accountFixture.Account.GetBalance();
+            var startingBalance = _fixture.Account.GetBalance();
             var amount = 50;
 
             // Act 
-            _accountFixture.Account.Deposit(amount, "Deposit {amount} $");
+            _fixture.Account.Deposit(amount, "Deposit {amount} $");
 
             // Assert
-            Assert.Equal(startingBalance + amount, _accountFixture.Account.GetBalance());
+            Assert.Equal(startingBalance + amount, _fixture.Account.GetBalance());
         }
 
         [Fact]
         public void AccountWithdrawAll_ReturnsZeroBalance()
         {
             // Arrange
-            var startingBalance = _accountFixture.Account.GetBalance();
+            var startingBalance = _fixture.Account.GetBalance();
             var amount = startingBalance;
 
             // Act 
-            _accountFixture.Account.Withdraw(amount, "Total withdraw {amount} $");
+            _fixture.Account.Withdraw(amount, "Total withdraw {amount} $");
 
             // Assert
-            Assert.Equal(0, _accountFixture.Account.GetBalance());
+            Assert.Equal(0, _fixture.Account.GetBalance());
         }
 
         [Fact]
         public void AccountExcessiveWithdrawal_ThrowsException()
         {
             // Arrange
-            var startingBalance = _accountFixture.Account.GetBalance();
+            var startingBalance = _fixture.Account.GetBalance();
             var amount = startingBalance;
 
             // Act
             Action action = () =>
             {
-                _accountFixture.Account.Withdraw(amount + 1, "Excessive withdraw {amount} $");
+                _fixture.Account.Withdraw(amount + 1, "Excessive withdraw {amount} $");
             };
 
             // Assert
