@@ -6,6 +6,7 @@ namespace Testing.Bank.Tests.Simple
     public class UserShould
     {
         [Fact]
+        [Trait("type", "exception")]
         public void UserWithoutName_ThrowsException()
         {
             // Arrange
@@ -21,6 +22,7 @@ namespace Testing.Bank.Tests.Simple
         }
 
         [Fact]
+        [Trait("type", "exception")]
         public void YoungerUser_ThrowsException()
         {
             // Arrange
@@ -36,6 +38,7 @@ namespace Testing.Bank.Tests.Simple
         }
 
         [Fact]
+        [Trait("type", "instance")]
         public void UserWithRightParameters_GenerateInstance()
         {
             // Arrange

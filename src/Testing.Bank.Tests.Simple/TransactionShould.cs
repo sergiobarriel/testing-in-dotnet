@@ -22,6 +22,7 @@ namespace Testing.Bank.Tests.Simple
         }
 
         [Fact]
+        [Trait("type", "exception")]
         public void TransactionWithLessThanZeroAmount_ThrowsException()
         {
             // Arrange

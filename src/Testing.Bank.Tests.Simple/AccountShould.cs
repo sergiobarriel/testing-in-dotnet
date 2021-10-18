@@ -10,6 +10,7 @@ namespace Testing.Bank.Tests.Simple
         private User GetUser() => new User("Rick Sánchez", 70);
 
         [Fact]
+        [Trait("type", "instance")]
         public void AccountWithEmptyTransactions_GenerateInstance()
         {
             // Arrange
@@ -24,6 +25,7 @@ namespace Testing.Bank.Tests.Simple
         }
 
         [Fact]
+        [Trait("type", "instance")]
         public void AccountWithNullTransactions_GenerateInstance()
         {
             // Arrange
@@ -142,6 +144,7 @@ namespace Testing.Bank.Tests.Simple
         }
 
         [Fact]
+        [Trait("type", "exception")]
         public void AccountInZero_CantWithdraw()
         {
             // Arrange
