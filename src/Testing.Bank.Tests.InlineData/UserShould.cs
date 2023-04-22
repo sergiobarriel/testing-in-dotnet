@@ -15,7 +15,7 @@ namespace Testing.Bank.Tests.InlineData
         [InlineData("Morty Smith", null)]
         public void UserCreation_ThrowsExceptions(string name, int age)
         {
-            Action action = () => { _ = new User(name, age); };
+            var action = () => { _ = new User(name, age); };
 
             Assert.Throws<Exception>(action);
         }
