@@ -1,4 +1,4 @@
-# ✖️ Testing in .NET with XUnit 
+# ✖️ Testing in .NET with [XUnit](https://github.com/xunit)
 
 XUnit usage examples: theories, member data, inline data, custom data, class data, fixtures, assertions, ...
 
