@@ -1,6 +1,6 @@
-# ✖️ Testing in .NET with [XUnit](https://github.com/xunit)
+# ✖️ Testing in .NET with XUnit
 
-XUnit usage examples: theories, member data, inline data, custom data, class data, fixtures, assertions, ...
+[XUnit](https://github.com/xunit) usage examples: theories, member data, inline data, custom data, class data, fixtures, assertions, ...
 
 [View all Github Actions](https://github.com/sergiobarriel/testing-in-dotnet/actions)
 
